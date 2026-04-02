@@ -469,10 +469,30 @@ function buildSlides(metrics, habits) {
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">
             Tracking My Progress Over Time
           </h2>
-          <p className="text-white/40 text-xs mb-4">
+          <p className="text-white/40 text-xs mb-2">
             I scored myself on 9 hygiene habits each day — first 5 days as a
             baseline, then after using the dashboard as the intervention.
           </p>
+          <div className="flex flex-wrap justify-center gap-1.5 mb-4">
+            {[
+              "Hand Wash (Before Eating)",
+              "Hand Wash (After Public)",
+              "Avoided Touching Face",
+              "Disinfected Surfaces",
+              "Slept 7+ Hours",
+              "Used Hand Sanitizer",
+              "Avoided Sharing Food/Drinks",
+              "Avoided Contact w/ Sick People",
+              "Controlled Environment (Ventilation)",
+            ].map((h) => (
+              <span
+                key={h}
+                className="px-2 py-0.5 rounded-full bg-white/10 text-white/50 text-[10px]"
+              >
+                {h}
+              </span>
+            ))}
+          </div>
           {chartData.length > 0 ? (
             <div className="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10">
               <ResponsiveContainer width="100%" height={280}>
