@@ -19,9 +19,6 @@ import {
   Target,
   Lightbulb,
   BookOpen,
-  AlertTriangle,
-  Code,
-  CheckCircle,
 } from "lucide-react";
 import {
   AreaChart,
@@ -58,24 +55,17 @@ const barColors = [
   "#14b8a6",
 ];
 
-// Background images for visual slides
 const images = {
   title:
     "https://images.unsplash.com/photo-1585559604959-6388fe69c92a?w=1200&h=600&fit=crop&q=80",
-  problem:
-    "https://images.unsplash.com/photo-1582560475093-ba66accbc424?w=1200&h=600&fit=crop&q=80",
   goals:
     "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1200&h=600&fit=crop&q=80",
   method:
     "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=1200&h=600&fit=crop&q=80",
-  built:
-    "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1200&h=600&fit=crop&q=80",
   results:
     "https://images.unsplash.com/photo-1584265549884-cb8ea4cf4e6a?w=1200&h=600&fit=crop&q=80",
   findings:
     "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=600&fit=crop&q=80",
-  experiment:
-    "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200&h=600&fit=crop&q=80",
   graph:
     "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=600&fit=crop&q=80",
   improvement:
@@ -95,7 +85,10 @@ function SlideTooltip({ active, payload, label }) {
     <div className="bg-black/80 backdrop-blur-sm border border-white/20 rounded-lg p-2 text-xs">
       <p className="font-bold text-white">{label}</p>
       <p className="text-white/70">
-        Score: <strong className="text-white">{payload[0].value.toFixed(0)}%</strong>
+        Score:{" "}
+        <strong className="text-white">
+          {payload[0].value.toFixed(0)}%
+        </strong>
       </p>
     </div>
   );
@@ -123,7 +116,6 @@ function buildSlides(metrics, habits) {
     (d) => Number(d.score_pct) >= 0.8
   ).length;
 
-  // Compute best streak
   let bestStreak = 0;
   let currentStreak = 0;
   for (const d of habits) {
@@ -135,14 +127,12 @@ function buildSlides(metrics, habits) {
     }
   }
 
-  // Chart data for habit tracking graph
   const chartData = habits.map((d, i) => ({
     date: d.date,
     pct: Number(d.score_pct) * 100,
     phase: i < 5 ? "Baseline" : "Intervention",
   }));
 
-  // Survey findings for bar chart and cards
   const surveyFindings = [];
   if (m.wash_hands_good_pct != null)
     surveyFindings.push({
@@ -224,8 +214,8 @@ function buildSlides(metrics, habits) {
             Can awareness actually change how students prevent disease?
           </p>
           <p className="text-sm text-white/40 max-w-md mx-auto">
-            An interactive dashboard that surveys students, tracks daily hygiene
-            habits, and measures whether education drives real behavior change.
+            I surveyed students, tracked my own daily hygiene habits, and
+            measured whether education drives real behavior change.
           </p>
           {m.total_responses && (
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white/60 text-sm mt-6">
@@ -237,61 +227,7 @@ function buildSlides(metrics, habits) {
       ),
     },
 
-    // ── 1: THE PROBLEM ────────────────────────────────────────
-    {
-      bg: images.problem,
-      render: () => (
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-center gap-2 mb-2">
-            <AlertTriangle className="w-4 h-4 text-white/60" />
-            <span className="text-white/60 text-xs font-semibold uppercase tracking-wider">
-              The Problem
-            </span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-6">
-            Students Don't Practice What They Know
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[
-              {
-                stat: "16–21%",
-                text: "of respiratory infections are preventable with proper handwashing alone (CDC)",
-              },
-              {
-                stat: "23–40%",
-                text: "reduction in diarrheal illness when hands are washed properly (CDC)",
-              },
-              {
-                stat: "Millions",
-                text: "of school days are lost each year due to preventable infectious diseases",
-              },
-              {
-                stat: "Gap",
-                text: "Most students know the basics but don't consistently follow through in daily life",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10"
-              >
-                <p className="text-2xl font-black text-white mb-1">
-                  {item.stat}
-                </p>
-                <p className="text-white/60 text-xs leading-relaxed">
-                  {item.text}
-                </p>
-              </div>
-            ))}
-          </div>
-          <p className="text-white/40 text-xs mt-4 text-center">
-            I wanted to find out: can showing students their own data actually
-            close this gap?
-          </p>
-        </div>
-      ),
-    },
-
-    // ── 2: RESEARCH GOALS ─────────────────────────────────────
+    // ── 1: RESEARCH GOALS ─────────────────────────────────────
     {
       bg: images.goals,
       render: () => (
@@ -325,7 +261,7 @@ function buildSlides(metrics, habits) {
               {
                 num: "4",
                 title: "Measure Behavior Change",
-                text: "Track daily habits before and after dashboard access to see if awareness leads to real improvement.",
+                text: "Track my own daily habits before and after using the dashboard to see if awareness leads to real improvement.",
               },
             ].map((goal) => (
               <div
@@ -348,7 +284,7 @@ function buildSlides(metrics, habits) {
       ),
     },
 
-    // ── 3: METHODOLOGY ────────────────────────────────────────
+    // ── 2: METHODOLOGY ────────────────────────────────────────
     {
       bg: images.method,
       render: () => (
@@ -364,8 +300,8 @@ function buildSlides(metrics, habits) {
               Survey. Build. Track. Measure.
             </h2>
             <p className="text-white/40 text-xs mt-3">
-              A 4-step process designed to test whether data-driven awareness
-              actually changes student behavior.
+              A 4-step process to test whether data-driven awareness actually
+              changes behavior.
             </p>
           </div>
           <div className="sm:w-3/5 flex flex-col gap-2">
@@ -383,12 +319,12 @@ function buildSlides(metrics, habits) {
               {
                 num: "03",
                 title: "Intervention",
-                text: "Gave students access to the dashboard showing their collective results + CDC/WHO recommendations",
+                text: "Built an interactive dashboard showing survey results + CDC/WHO recommendations as the intervention",
               },
               {
                 num: "04",
                 title: "Measurement",
-                text: "Tracked daily hygiene scores across baseline (before) and intervention (after) periods to quantify improvement",
+                text: "Tracked my own daily hygiene scores across a baseline period (before) and intervention period (after)",
               },
             ].map((step) => (
               <div
@@ -409,65 +345,7 @@ function buildSlides(metrics, habits) {
       ),
     },
 
-    // ── 4: WHAT I BUILT ───────────────────────────────────────
-    {
-      bg: images.built,
-      render: () => (
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-center gap-2 mb-2">
-            <Code className="w-4 h-4 text-white/60" />
-            <span className="text-white/60 text-xs font-semibold uppercase tracking-wider">
-              What I Built
-            </span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-6">
-            A Live, Interactive Dashboard
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            {[
-              {
-                label: "React + Tailwind",
-                desc: "Modern frontend framework with responsive design",
-              },
-              {
-                label: "Google Sheets API",
-                desc: "Live data connection — survey responses update in real-time",
-              },
-              {
-                label: "Recharts",
-                desc: "Interactive graphs for daily habit score tracking over time",
-              },
-              {
-                label: "6 Practice Cards",
-                desc: "Each card shows data + CDC/WHO best practices + daily actions",
-              },
-              {
-                label: "Habit Tracker",
-                desc: "Baseline vs. intervention comparison with auto-generated insights",
-              },
-              {
-                label: "Railway Hosting",
-                desc: "Deployed live at spreadlessdisease.lol for student access",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10"
-              >
-                <p className="text-white font-bold text-sm mb-1">
-                  {item.label}
-                </p>
-                <p className="text-white/50 text-[11px] leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      ),
-    },
-
-    // ── 5: SURVEY RESULTS — CARDS ─────────────────────────────
+    // ── 3: SURVEY RESULTS — CARDS ─────────────────────────────
     {
       bg: images.results,
       render: () => (
@@ -519,7 +397,7 @@ function buildSlides(metrics, habits) {
       ),
     },
 
-    // ── 6: SURVEY RESULTS — BAR CHART ─────────────────────────
+    // ── 4: SURVEY RESULTS — BAR CHART ─────────────────────────
     {
       bg: images.findings,
       render: () => (
@@ -534,7 +412,8 @@ function buildSlides(metrics, habits) {
             Where Students Fall Short
           </h2>
           <p className="text-white/40 text-xs mb-5">
-            Percentage of students with gaps in each prevention area — higher bars = bigger problems
+            Percentage of students with gaps in each prevention area — higher
+            bars = bigger problems
           </p>
           {surveyFindings.length ? (
             <div className="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10">
@@ -576,67 +455,7 @@ function buildSlides(metrics, habits) {
       ),
     },
 
-    // ── 7: HABIT TRACKING EXPERIMENT ──────────────────────────
-    {
-      bg: images.experiment,
-      render: () => (
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-center gap-2 mb-2">
-            <FlaskConical className="w-4 h-4 text-white/60" />
-            <span className="text-white/60 text-xs font-semibold uppercase tracking-wider">
-              The Experiment
-            </span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-6">
-            Baseline vs. Intervention
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="bg-black/30 backdrop-blur-md rounded-xl p-5 border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center mb-3">
-                <span className="text-lg font-black text-orange-400">B</span>
-              </div>
-              <h3 className="text-white font-bold mb-2">
-                Baseline Period (First 5 Days)
-              </h3>
-              <p className="text-white/50 text-xs leading-relaxed">
-                I tracked 9 daily hygiene habits <strong className="text-white/70">before</strong> showing students
-                the dashboard or any data. This measured their natural behavior
-                without any intervention.
-              </p>
-              {baseline.length > 0 && (
-                <p className="text-orange-400 font-bold text-lg mt-3">
-                  Avg: {(baselineAvg * 100).toFixed(0)}%
-                </p>
-              )}
-            </div>
-            <div className="bg-black/30 backdrop-blur-md rounded-xl p-5 border border-white/10">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center mb-3">
-                <span className="text-lg font-black text-emerald-400">I</span>
-              </div>
-              <h3 className="text-white font-bold mb-2">
-                Intervention Period (After)
-              </h3>
-              <p className="text-white/50 text-xs leading-relaxed">
-                <strong className="text-white/70">After</strong> sharing the dashboard with real survey
-                results and CDC/WHO recommendations, I continued tracking the
-                same 9 habits to measure if behavior actually changed.
-              </p>
-              {interventionAvg != null && (
-                <p className="text-emerald-400 font-bold text-lg mt-3">
-                  Avg: {(interventionAvg * 100).toFixed(0)}%
-                </p>
-              )}
-            </div>
-          </div>
-          <p className="text-white/40 text-xs mt-4 text-center">
-            9 habits tracked daily: handwashing, staying home, vaccination
-            check, cough etiquette, disinfecting, exposure control, and more
-          </p>
-        </div>
-      ),
-    },
-
-    // ── 8: HABIT TRACKING GRAPH ───────────────────────────────
+    // ── 5: MY HABIT TRACKING GRAPH ────────────────────────────
     {
       bg: images.graph,
       render: () => (
@@ -644,15 +463,15 @@ function buildSlides(metrics, habits) {
           <div className="flex items-center gap-2 mb-1">
             <TrendingUp className="w-4 h-4 text-white/60" />
             <span className="text-white/60 text-xs font-semibold uppercase tracking-wider">
-              Daily Habit Scores
+              My Daily Habit Scores
             </span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-2">
-            Tracking Progress Over Time
+            Tracking My Progress Over Time
           </h2>
           <p className="text-white/40 text-xs mb-4">
-            Each dot = one day's hygiene score out of 9 habits. Orange dashed
-            line = 80% target.
+            I scored myself on 9 hygiene habits each day — first 5 days as a
+            baseline, then after using the dashboard as the intervention.
           </p>
           {chartData.length > 0 ? (
             <div className="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10">
@@ -741,11 +560,11 @@ function buildSlides(metrics, habits) {
                   Daily Score
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-3 h-0.5 bg-amber-500 rounded border-dashed" />
+                  <span className="w-3 h-0.5 bg-amber-500 rounded" />
                   80% Target
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="w-3 h-0.5 bg-emerald-500 rounded border-dashed" />
+                  <span className="w-3 h-0.5 bg-emerald-500 rounded" />
                   Intervention Start
                 </span>
               </div>
@@ -759,7 +578,7 @@ function buildSlides(metrics, habits) {
       ),
     },
 
-    // ── 9: RESULTS — BIG IMPROVEMENT NUMBER ───────────────────
+    // ── 6: RESULTS — BIG IMPROVEMENT NUMBER ───────────────────
     {
       bg: images.improvement,
       render: () => (
@@ -776,7 +595,6 @@ function buildSlides(metrics, habits) {
 
           {habits.length > 0 ? (
             <div className="flex flex-col sm:flex-row gap-4">
-              {/* Big number */}
               {improvement != null && (
                 <div className="sm:w-1/2 bg-black/30 backdrop-blur-md rounded-xl p-6 border border-white/10 flex flex-col items-center justify-center">
                   <p className="text-6xl sm:text-7xl font-black text-white leading-none">
@@ -784,7 +602,7 @@ function buildSlides(metrics, habits) {
                     {improvement.toFixed(0)}%
                   </p>
                   <p className="text-white/50 text-sm mt-3">
-                    improvement after intervention
+                    my improvement after intervention
                   </p>
                   <div className="flex items-center gap-3 mt-2 text-xs text-white/30">
                     <span className="text-orange-400">
@@ -798,20 +616,19 @@ function buildSlides(metrics, habits) {
                 </div>
               )}
 
-              {/* Stats column */}
               <div className="sm:w-1/2 flex flex-col gap-3">
                 {[
-                  { val: `${habits.length}`, label: "total days tracked" },
+                  { val: `${habits.length}`, label: "total days I tracked" },
                   {
                     val:
                       bestDay != null
                         ? `${(bestDay * 100).toFixed(0)}%`
                         : "—",
-                    label: "best single-day score",
+                    label: "my best single-day score",
                   },
                   {
                     val: `${daysAtTarget}/${habits.length}`,
-                    label: "days above 80% target",
+                    label: "days I hit the 80% target",
                   },
                   {
                     val: `${bestStreak}`,
@@ -839,33 +656,30 @@ function buildSlides(metrics, habits) {
       ),
     },
 
-    // ── 10: KEY TAKEAWAYS ─────────────────────────────────────
+    // ── 7: KEY TAKEAWAYS ─────────────────────────────────────
     {
       bg: images.takeaways,
       render: () => {
         const takeaways = [];
         if (improvement != null) {
           takeaways.push(
-            `Awareness works: scores jumped from ${(baselineAvg * 100).toFixed(0)}% to ${(interventionAvg * 100).toFixed(0)}% — a ${improvement > 0 ? "+" : ""}${improvement.toFixed(0)}% improvement after seeing their own data.`
+            `Awareness works: my scores jumped from ${(baselineAvg * 100).toFixed(0)}% to ${(interventionAvg * 100).toFixed(0)}% — a ${improvement > 0 ? "+" : ""}${improvement.toFixed(0)}% improvement after using the dashboard.`
           );
         }
         takeaways.push(
-          "The survey revealed that hand hygiene and surface disinfection are the two areas where students need the most improvement."
-        );
-        takeaways.push(
-          "Giving students access to a live dashboard with evidence-based recommendations created a measurable shift in daily habits."
+          "The survey showed that hand hygiene and surface disinfection are the two biggest gaps among students."
         );
         if (bestStreak >= 3) {
           takeaways.push(
-            `Consistency built over time — the best streak was ${bestStreak} days in a row at 80%+, showing sustained behavior change.`
+            `Consistency built over time — my best streak was ${bestStreak} days in a row at 80%+.`
           );
         } else {
           takeaways.push(
-            "Building consistency remains a challenge — longer interventions could help students sustain behavior change."
+            "Building consistency is the hardest part — longer tracking periods would help sustain change."
           );
         }
         takeaways.push(
-          "Data-driven education outperforms generic health advice. Students engage more when they see their own community's numbers."
+          "Seeing real data from my own community made prevention feel personal, not just textbook advice."
         );
 
         return (
@@ -899,57 +713,7 @@ function buildSlides(metrics, habits) {
       },
     },
 
-    // ── 11: WHAT I'D DO DIFFERENTLY / NEXT STEPS ──────────────
-    {
-      bg: images.method,
-      render: () => (
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-center gap-2 mb-2">
-            <CheckCircle className="w-4 h-4 text-white/60" />
-            <span className="text-white/60 text-xs font-semibold uppercase tracking-wider">
-              Reflection
-            </span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-6">
-            How I'd Improve
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {[
-              {
-                title: "Longer Tracking Period",
-                text: "More days of data would show whether behavior change truly sticks over weeks, not just days.",
-              },
-              {
-                title: "Larger Sample Size",
-                text: "Survey more students across different classes to make findings more generalizable.",
-              },
-              {
-                title: "Push Notifications",
-                text: "Add daily reminders to the dashboard to help students build consistent habits.",
-              },
-              {
-                title: "Individual Tracking",
-                text: "Let each student track their own habits privately, not just aggregate scores.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10"
-              >
-                <p className="text-white font-bold text-sm mb-1">
-                  {item.title}
-                </p>
-                <p className="text-white/50 text-xs leading-relaxed">
-                  {item.text}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      ),
-    },
-
-    // ── 12: GOSPEL ────────────────────────────────────────────
+    // ── 8: GOSPEL ────────────────────────────────────────────
     {
       bg: images.gospel,
       render: () => (
@@ -960,8 +724,8 @@ function buildSlides(metrics, habits) {
           </h2>
           <div className="bg-black/30 backdrop-blur-md rounded-xl p-6 border border-white/10 text-left mb-4">
             <p className="text-white/80 text-sm italic leading-relaxed mb-3">
-              "He that hath clean hands, and a pure heart… shall ascend into
-              the hill of the Lord."
+              "He that hath clean hands, and a pure heart… shall ascend into the
+              hill of the Lord."
             </p>
             <p className="text-white/40 text-xs">— Psalm 24:3–4</p>
           </div>
@@ -974,7 +738,7 @@ function buildSlides(metrics, habits) {
       ),
     },
 
-    // ── 13: SOURCES ───────────────────────────────────────────
+    // ── 9: SOURCES ───────────────────────────────────────────
     {
       bg: images.citations,
       render: () => (
@@ -1019,17 +783,16 @@ function buildSlides(metrics, habits) {
           </div>
           <div className="bg-black/30 backdrop-blur-md rounded-xl p-4 border border-white/10 mt-4">
             <p className="text-white/50 text-xs leading-relaxed">
-              All recommendations in the dashboard are backed by peer-reviewed
-              research and official guidelines from the CDC, WHO, Harvard T.H.
-              Chan School of Public Health, Stanford Medicine, and MIT Medical.
-              Full citations are available in the Citations tab of the dashboard.
+              All recommendations are backed by official guidelines from the CDC,
+              WHO, Harvard T.H. Chan School of Public Health, Stanford Medicine,
+              and MIT Medical. Full citations available in the Citations tab.
             </p>
           </div>
         </div>
       ),
     },
 
-    // ── 14: QUESTIONS ─────────────────────────────────────────
+    // ── 10: QUESTIONS ─────────────────────────────────────────
     {
       bg: images.end,
       render: () => (
@@ -1147,16 +910,13 @@ export default function PresentSection({ metrics }) {
       {/* Slide */}
       <div key={current} className="slide-enter">
         <div className="relative overflow-hidden rounded-2xl min-h-[480px] sm:min-h-[520px] flex flex-col justify-center p-8 sm:p-14">
-          {/* Background image */}
           <img
             src={slide.bg}
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
             loading="eager"
           />
-          {/* Dark overlay */}
           <div className="absolute inset-0 bg-black/65" />
-          {/* Content */}
           <div className="relative z-10">{slide.render()}</div>
         </div>
       </div>
