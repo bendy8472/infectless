@@ -207,12 +207,11 @@ function buildSlides(metrics, habits) {
           <span className="inline-block px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-white/80 text-xs font-semibold uppercase tracking-wider mb-4">
             Science Class Project
           </span>
-          <h1 className="text-5xl sm:text-7xl font-black text-white leading-none mb-4">
-            InfectLess
+          <h1 className="text-4xl sm:text-6xl font-black text-white leading-tight mb-4">
+            Preventing Disease Spread,
+            <br />
+            Creating Awareness
           </h1>
-          <p className="text-lg text-white/70 mb-2">
-            Can awareness actually change how students prevent disease?
-          </p>
           <p className="text-sm text-white/40 max-w-md mx-auto">
             I surveyed students, tracked my own daily hygiene habits, and
             measured whether education drives real behavior change.
