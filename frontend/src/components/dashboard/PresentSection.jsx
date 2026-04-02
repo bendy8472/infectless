@@ -57,7 +57,7 @@ const barColors = [
 
 const images = {
   title:
-    "https://images.unsplash.com/photo-1585559604959-6388fe69c92a?w=1200&h=600&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1584265549884-cb8ea4cf4e6a?w=1200&h=600&fit=crop&q=80",
   goals:
     "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=1200&h=600&fit=crop&q=80",
   method:
