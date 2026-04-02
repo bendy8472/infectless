@@ -47,7 +47,7 @@ const styleMap = {
 // Unsplash images for each practice
 const imageMap = {
   "hand-hygiene":
-    "https://images.unsplash.com/photo-1584265549884-cb8ea4cf4e6a?w=400&h=250&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1603712725038-e9334ae8f39f?w=400&h=250&fit=crop&q=80",
   "stay-home":
     "https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=400&h=250&fit=crop&q=80",
   vaccination:
